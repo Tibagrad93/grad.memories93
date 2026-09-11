@@ -1,0 +1,10 @@
+# بيانات البيئة والمتغيرات السرية
+.env
+.env.local
+
+# ملفات المكتبات المؤقتة
+node_modules/
+
+# ملفات الـ Firebase
+.firebase/
+firebase-debug.log
