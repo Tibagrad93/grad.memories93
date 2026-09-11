@@ -179,7 +179,6 @@
 
     .btn-danger-all:hover { background: var(--danger); color: white; }
 
-    /* لوحة إعداد العداد التنازلي للحفل */
     .countdown-admin-card {
       background: rgba(15, 23, 42, 0.7);
       border: 1.5px solid rgba(129, 140, 248, 0.4);
@@ -193,7 +192,6 @@
       gap: 12px;
     }
 
-    /* لوحة التحكم السريعة في شارات الترتيب */
     .quick-rank-panel {
       background: rgba(15, 23, 42, 0.85);
       border: 1.5px solid rgba(251, 191, 36, 0.4);
@@ -251,6 +249,8 @@
       padding: 16px 20px;
       border-radius: 16px;
       margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
     .btn-excel { background: var(--success); color: white; padding: 10px 18px; }
@@ -361,6 +361,8 @@
       padding: 28px;
       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
       color: #ffffff;
+      max-height: 90vh;
+      overflow-y: auto;
     }
 
     .modal-header {
@@ -416,6 +418,18 @@
         </div>
       </div>
 
+      <!-- لوحة التحكم في حالة التسجيل (فتح/قفل) -->
+      <div class="countdown-admin-card" style="border-color: rgba(16, 185, 129, 0.4);">
+        <div>
+          <strong style="color: #34d399; font-size: 1rem; display:block;">🔒 التحكم في استقبال تسجيلات الطلاب:</strong>
+          <small style="color: #94a3b8;">يمكنك إغلاق باب التسجيل فوراً أو فتحه للطلاب.</small>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <span id="regStatusLabel" style="font-weight:bold; color:#34d399;">مفتوح</span>
+          <button class="btn" id="toggleRegBtn" style="background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4);" onclick="toggleRegistrationState()">إغلاق التسجيل 🛑</button>
+        </div>
+      </div>
+
       <!-- لوحة التحكم الجماعي السريع في الشارات -->
       <div class="quick-rank-panel">
         <div>
@@ -435,26 +449,35 @@
         </div>
       </div>
 
-      <div class="action-toolbar">
+      <div class="action-toolbar" style="grid-template-columns: 2fr 1fr; align-items: center; background: rgba(15, 23, 42, 0.7); padding: 15px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 20px;">
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <label style="color: #fbbf24; font-weight: bold;">🎨 اختر تصميم الباوربوينت:</label>
+          <select id="pptThemeSelect" class="input-field" style="margin-bottom: 0; width: auto; background: rgba(30, 41, 59, 0.9);">
+            <option value="cheerful">فاتح مبهج (ألوان حفلات تخرج حيوية وساطعة)</option>
+            <option value="dark">غامق احترافي (كحلي ملكي راقي وأنيق)</option>
+          </select>
+        </div>
         <button class="btn btn-slideshow" id="exportPptxBtn" onclick="generatePowerPoint()">
-          🎬 تحميل عرض الداتا شو للحفل (PowerPoint .pptx)
-        </button>
-        <button class="btn btn-danger-all" onclick="deleteAllStudents()">
-          🗑️ مسح بيانات كل الطلاب
+          🎬 تحميل عرض الداتا شو (PowerPoint)
         </button>
       </div>
 
-      <!-- استيراد Excel -->
+      <!-- استيراد Excel وتصدير تقرير المقاعد -->
       <div class="excel-box">
         <div>
-          <strong style="color: #34d399; font-size:1.05rem;">📊 استيراد قائمة الطلاب من ملف Excel:</strong>
+          <strong style="color: #34d399; font-size:1.05rem;">📊 إدارة البيانات والتقارير (Excel):</strong>
           <p style="font-size: 0.85rem; color: #94a3b8; margin-top: 3px;">
-            الأعمدة المدعومة: <strong>الكود</strong> | <strong>الاسم</strong> | <strong>المعدل</strong> | <strong>التخصص</strong> | <strong>المشروع</strong> | <strong>ترتيب المشروع</strong> | <strong>التميز</strong>
+            استيراد قائمة الطلاب أو تصدير تقرير المقاعد وترتيب الدفعة تلقائياً.
           </p>
         </div>
-        <button class="btn btn-excel" onclick="document.getElementById('excelFileInput').click()">
-          📁 رفع ملف إكسيل
-        </button>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn" style="background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.4); color: #93c5fd;" onclick="exportSeatsExcelReport()">
+            📥 استخراج تقرير المقاعد (Excel)
+          </button>
+          <button class="btn btn-excel" onclick="document.getElementById('excelFileInput').click()">
+            📁 رفع ملف إكسيل للطلاب
+          </button>
+        </div>
         <input type="file" id="excelFileInput" accept=".xlsx, .xls, .csv" style="display:none;" onchange="handleExcelUpload(event)">
       </div>
 
@@ -486,13 +509,13 @@
         <table>
           <thead>
             <tr>
+              <th>رقم المقعد</th>
               <th>الكود</th>
               <th>الاسم</th>
               <th>التخصص</th>
               <th>المعدل</th>
               <th>شارة الترتيب</th>
               <th>مشروع التخرج</th>
-              <th>التصنيف</th>
               <th>إجراءات</th>
             </tr>
           </thead>
@@ -501,6 +524,12 @@
           </tbody>
         </table>
       </div>
+      
+      <div style="margin-top: 20px; text-align: left;">
+        <button class="btn btn-danger-all" onclick="deleteAllStudents()">
+          🗑️ مسح بيانات كل الطلاب
+        </button>
+      </div>
     </div>
   </div>
 
@@ -508,7 +537,7 @@
   <div class="modal-overlay" id="editModal">
     <div class="modal-box">
       <div class="modal-header">
-        <h3>✏️ تعديل بيانات وشارة الخريج</h3>
+        <h3>✏️ تعديل بيانات وصورة الخريج</h3>
         <button class="close-btn" onclick="closeEditModal()">&times;</button>
       </div>
       <input type="hidden" id="editDocId">
@@ -532,6 +561,11 @@
           <label style="font-size:0.85rem; color:#cbd5e1;">المعدل التراكمي (GPA):</label>
           <input type="number" step="0.01" id="editGpa" class="input-field">
         </div>
+      </div>
+
+      <div style="margin-bottom:10px;">
+        <label style="font-size:0.85rem; color:#cbd5e1;">رابط صورة الطالب الشخصية:</label>
+        <input type="text" id="editPhoto" class="input-field" placeholder="أدخل رابط الصورة المباشر أو بصيغة Base64">
       </div>
 
       <div style="background:rgba(15,23,42,0.7); border:1px dashed #fbbf24; border-radius:12px; padding:12px; margin-bottom:12px;">
@@ -600,6 +634,7 @@
     const db = firebase.firestore();
 
     let studentsList = [];
+    let isRegistrationOpen = true;
 
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -650,8 +685,47 @@
           const d = doc.data();
           if (d.eventDate) document.getElementById('eventDateTimeInput').value = d.eventDate;
           document.getElementById('showCountdownCheck').checked = !!d.showCountdown;
+          
+          if (d.registrationOpen !== undefined) {
+            isRegistrationOpen = d.registrationOpen;
+          } else {
+            isRegistrationOpen = true;
+          }
+          updateRegStatusUI();
         }
       });
+    }
+
+    function updateRegStatusUI() {
+      const label = document.getElementById('regStatusLabel');
+      const btn = document.getElementById('toggleRegBtn');
+      if (isRegistrationOpen) {
+        label.innerText = 'مفتوح';
+        label.style.color = '#34d399';
+        btn.innerText = 'إغلاق التسجيل 🛑';
+        btn.style.background = 'rgba(239, 68, 68, 0.2)';
+        btn.style.color = '#fca5a5';
+        btn.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+      } else {
+        label.innerText = 'مغلق';
+        label.style.color = '#ef4444';
+        btn.innerText = 'فتح التسجيل ✅';
+        btn.style.background = 'rgba(16, 185, 129, 0.2)';
+        btn.style.color = '#34d399';
+        btn.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+      }
+    }
+
+    async function toggleRegistrationState() {
+      const newState = !isRegistrationOpen;
+      try {
+        await db.collection("settings").doc("general").set({
+          registrationOpen: newState
+        }, { merge: true });
+        alert(newState ? '✅ تم فتح باب التسجيل بنجاح!' : '🛑 تم إغلاق باب التسجيل بنجاح!');
+      } catch (err) {
+        alert('حدث خطأ: ' + err.message);
+      }
     }
 
     async function saveCountdownSetting() {
@@ -682,7 +756,6 @@
       });
     }
 
-    // 1. ميزة: إبقاء الأول على كل قسم فقط وإلغاء الشارة عن الباقين بضغطة واحدة
     async function setTop1OnlyGlobal() {
       if (studentsList.length === 0) return alert('لا يوجد طلاب لتطبيق الإجراء عليهم.');
 
@@ -720,7 +793,6 @@
       }
     }
 
-    // 2. ميزة: تفعيل شارات الترتيب للجميع (أول 10 في كل قسم) بضغطة واحدة
     async function enableAllRanksGlobal() {
       if (studentsList.length === 0) return alert('لا يوجد طلاب.');
 
@@ -740,7 +812,6 @@
       }
     }
 
-    // 3. ميزة: إخفاء الشارات عن جميع الطلاب بدون استثناء
     async function hideAllRanksGlobal() {
       if (studentsList.length === 0) return alert('لا يوجد طلاب.');
 
@@ -781,7 +852,7 @@
         return;
       }
 
-      filtered.forEach(student => {
+      filtered.forEach((student, index) => {
         let rankBadgeText = '<span style="color:#94a3b8;">تلقائي</span>';
         if (student.hideRank) {
           rankBadgeText = '<span style="color:#f87171; font-weight:bold;">❌ مخفية</span>';
@@ -791,13 +862,13 @@
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
+          <td><strong style="color:#34d399;">مقعد #${index + 1}</strong></td>
           <td><strong style="color:#fbbf24;">${student.code}</strong></td>
           <td style="font-weight:700;">${student.name}</td>
           <td>${student.department || '—'}</td>
           <td><strong style="color:#34d399;">${student.gpa || '—'}</strong></td>
           <td>${rankBadgeText}</td>
           <td style="color:#93c5fd;">${student.projectName ? `${student.projectName}` : '—'}</td>
-          <td>${student.isTop ? '<span style="color:#fbbf24; font-weight:bold;">👑 أوائل</span>' : '<span style="color:#64748b;">عادي</span>'}</td>
           <td>
             <button class="btn-action btn-edit" onclick="openEditModal('${student.id}')">✏️ تعديل</button>
             <button class="btn-action btn-toggle-top" onclick="toggleTopStatus('${student.id}', ${!student.isTop})">
@@ -949,6 +1020,29 @@
       reader.readAsArrayBuffer(file);
     }
 
+    function exportSeatsExcelReport() {
+      if (studentsList.length === 0) return alert('لا توجد بيانات طلاب لتصديرها.');
+
+      const exportData = studentsList.map((student, index) => ({
+        "رقم المقعد": index + 1,
+        "اسم الطالب": student.name || '',
+        "التخصص / القسم": student.department || '',
+        "الكود": student.code || '',
+        "المعدل": student.gpa || ''
+      }));
+
+      const worksheet = XLSX.utils.json_to_sheet(exportData);
+      
+      // ضبط اتجاه الورقة من اليمين لليسار في إكسيل
+      if(!worksheet['!views']) worksheet['!views'] = [];
+      worksheet['!views'].push({ rightToLeft: true });
+
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "مقاعد الخريجين");
+
+      XLSX.writeFile(workbook, `Graduation_Seats_Report_${new Date().getFullYear()}.xlsx`);
+    }
+
     function openEditModal(docId) {
       const student = studentsList.find(s => s.id === docId);
       if (!student) return;
@@ -958,6 +1052,7 @@
       document.getElementById('editName').value = student.name;
       document.getElementById('editDept').value = student.department || '';
       document.getElementById('editGpa').value = student.gpa || '';
+      document.getElementById('editPhoto').value = student.photo || '';
       document.getElementById('editCustomRank').value = student.customRank || '';
       document.getElementById('editHideRank').checked = !!student.hideRank;
       document.getElementById('editProjName').value = student.projectName || '';
@@ -978,6 +1073,7 @@
       const name = document.getElementById('editName').value.trim();
       const department = document.getElementById('editDept').value.trim();
       const gpa = document.getElementById('editGpa').value.trim();
+      const photo = document.getElementById('editPhoto').value.trim();
       const customRank = document.getElementById('editCustomRank').value.trim();
       const hideRank = document.getElementById('editHideRank').checked;
       const projectName = document.getElementById('editProjName').value.trim();
@@ -997,6 +1093,7 @@
           name: name,
           department: department || 'خريج المعهد',
           gpa: gpa || '',
+          photo: photo,
           customRank: customRank,
           hideRank: hideRank,
           projectName: projectName || '',
@@ -1005,7 +1102,7 @@
           note: note,
           isTop: isTop
         });
-        alert('✅ تم تعديل بيانات الخريج وإعدادات الشارة بنجاح!');
+        alert('✅ تم تعديل بيانات وصورة الخريج بنجاح!');
         closeEditModal();
       } catch (err) {
         alert('تعذر الحفظ: ' + err.message);
@@ -1057,39 +1154,52 @@
     }
 
     async function generatePowerPoint() {
-      const submittedStudents = studentsList.filter(s => s.submitted);
-
-      if (submittedStudents.length === 0) {
-        alert('⚠️ لا يوجد طلاب قاموا بتسجيل ذكرياتهم بعد!');
+      if (studentsList.length === 0) {
+        alert('⚠️ لا يوجد طلاب في النظام!');
         return;
       }
 
       const pptxBtn = document.getElementById('exportPptxBtn');
-      pptxBtn.innerText = '⏳ جاري إنشاء العرض التقديمي وتنسيق التخصصات...';
+      const selectedTheme = document.getElementById('pptThemeSelect').value; // 'cheerful' أو 'dark'
+      
+      pptxBtn.innerText = '⏳ جاري إنشاء العرض التقديمي المخصص...';
       pptxBtn.disabled = true;
 
       try {
         let pptx = new PptxGenJS();
         pptx.layout = 'LAYOUT_16x9';
 
+        // إعداد ألوان الثيم المختار
+        let isCheerful = (selectedTheme === 'cheerful');
+        let bgIntroColor = isCheerful ? 'F8FAFC' : '0D1B2A';
+        let titleIntroColor = isCheerful ? '1E3A8A' : 'FFFFFF';
+        let subTitleIntroColor = isCheerful ? 'D97706' : 'D97706';
+        
+        let slideBgColor = isCheerful ? 'FFFFFF' : '0F172A';
+        let cardBgColor = isCheerful ? 'F1F5F9' : '1E293B';
+        let nameColor = isCheerful ? '0F172A' : 'FFFFFF';
+        let textColor = isCheerful ? '334155' : 'E2E8F0';
+        let borderColor = isCheerful ? 'CBD5E1' : '334155';
+
+        // شريحة البداية
         let introSlide = pptx.addSlide();
-        introSlide.background = { color: '0D1B2A' };
+        introSlide.background = { color: bgIntroColor };
 
         introSlide.addShape(pptx.shapes.RECTANGLE, { x: 0, y: 0, w: 10.0, h: 0.15, fill: { color: 'D97706' } });
         introSlide.addShape(pptx.shapes.RECTANGLE, { x: 0, y: 5.47, w: 10.0, h: 0.15, fill: { color: 'D97706' } });
 
         introSlide.addText('🎓 حَفْلُ تَخَرُّجِ الدُّفْعَةِ 93', {
           x: 0.5, y: 1.8, w: 9.0, h: 1.0,
-          fontSize: 42, color: 'FFFFFF', bold: true, align: 'center', isRTL: true
+          fontSize: 42, color: titleIntroColor, bold: true, align: 'center', isRTL: true
         });
 
         introSlide.addText('معهد طيبة العالي لتكنولوجيا الإدارة والمعلومات ✨', {
           x: 0.5, y: 2.9, w: 9.0, h: 0.8,
-          fontSize: 22, color: 'D97706', align: 'center', isRTL: true
+          fontSize: 22, color: subTitleIntroColor, align: 'center', isRTL: true
         });
 
         const deptGroups = {};
-        submittedStudents.forEach(student => {
+        studentsList.forEach(student => {
           const dept = student.department ? student.department.trim() : 'عام';
           if (!deptGroups[dept]) deptGroups[dept] = [];
           deptGroups[dept].push(student);
@@ -1108,14 +1218,14 @@
 
         sortedDepts.forEach(group => {
           let deptDividerSlide = pptx.addSlide();
-          deptDividerSlide.background = { color: '1E1B4B' };
+          deptDividerSlide.background = { color: isCheerful ? 'E2E8F0' : '1E1B4B' };
 
           deptDividerSlide.addShape(pptx.shapes.RECTANGLE, { x: 0, y: 0, w: 10.0, h: 0.15, fill: { color: 'FBBA24' } });
           deptDividerSlide.addShape(pptx.shapes.RECTANGLE, { x: 0, y: 5.47, w: 10.0, h: 0.15, fill: { color: 'FBBA24' } });
 
           deptDividerSlide.addText(`🎓 خريجو تخصص: ${group.name}`, {
             x: 0.5, y: 2.0, w: 9.0, h: 0.9,
-            fontSize: 36, color: 'FFFFFF', bold: true, align: 'center', isRTL: true
+            fontSize: 36, color: isCheerful ? '1E3A8A' : 'FFFFFF', bold: true, align: 'center', isRTL: true
           });
 
           deptDividerSlide.addText(`⭐ أعلى معدل في التخصص: ${group.topGpa > 0 ? group.topGpa : '—'}`, {
@@ -1125,14 +1235,15 @@
 
           group.students.forEach((student, sIndex) => {
             let slide = pptx.addSlide();
-            slide.background = { color: '0F172A' };
+            slide.background = { color: slideBgColor };
 
             slide.addShape(pptx.shapes.RECTANGLE, { x: 0, y: 0, w: 10.0, h: 0.12, fill: { color: 'D97706' } });
             slide.addShape(pptx.shapes.RECTANGLE, { x: 0, y: 5.5, w: 10.0, h: 0.12, fill: { color: 'D97706' } });
 
+            // إطار وصورة الطالب (جهة اليسار لتناسب الـ RTL)
             slide.addShape(pptx.shapes.ROUNDED_RECTANGLE, {
               x: 6.6, y: 0.7, w: 2.8, h: 4.2,
-              fill: { color: '1E293B' },
+              fill: { color: cardBgColor },
               line: { color: student.isTop ? 'FBBA24' : 'D97706', width: student.isTop ? 3 : 2 },
               rectRadius: 0.15
             });
@@ -1140,6 +1251,12 @@
             if (student.photo && student.photo.startsWith('data:image')) {
               slide.addImage({
                 data: student.photo,
+                x: 6.75, y: 0.85, w: 2.5, h: 3.9,
+                rounding: true
+              });
+            } else if (student.photo && student.photo.startsWith('http')) {
+              slide.addImage({
+                path: student.photo,
                 x: 6.75, y: 0.85, w: 2.5, h: 3.9,
                 rounding: true
               });
@@ -1167,12 +1284,13 @@
               });
             }
 
+            // اسم الطالب (من اليمين لليسار)
             slide.addText(student.name, {
               x: 0.6, y: 0.8, w: 5.7, h: 0.6,
-              fontSize: 26, color: 'FFFFFF', bold: true, align: 'right', isRTL: true
+              fontSize: 26, color: nameColor, bold: true, align: 'right', isRTL: true
             });
 
-            let infoText = `التخصص: ${student.department || 'خريج المعهد'} | المعدل: ${student.gpa || '—'}`;
+            let infoText = `التخصص: ${student.department || 'خريج المعهد'} | المعدل التراكمي: ${student.gpa || '—'}`;
             if (student.projectName) infoText += ` | مشروع: ${student.projectName}`;
 
             slide.addText(infoText, {
@@ -1180,16 +1298,17 @@
               fontSize: 13, color: 'D97706', bold: true, align: 'right', isRTL: true
             });
 
+            // بطاقة الكلمة أو التهنئة
             slide.addShape(pptx.shapes.ROUNDED_RECTANGLE, {
               x: 0.6, y: 2.0, w: 5.7, h: 2.9,
-              fill: { color: '1E293B' },
-              line: { color: '334155', width: 1 },
+              fill: { color: cardBgColor },
+              line: { color: borderColor, width: 1 },
               rectRadius: 0.15
             });
 
-            slide.addText(`“ ${student.note || 'مبروك التخرج والتوفيق دائماً!'} ”`, {
+            slide.addText(`“ ${student.note || 'مبروك التخرج والتوفيق دائماً في مسيرتك المهنية!'} ”`, {
               x: 0.8, y: 2.2, w: 5.3, h: 2.5,
-              fontSize: 16, color: 'E2E8F0', italic: true, align: 'right', isRTL: true, valign: 'top'
+              fontSize: 15, color: textColor, italic: true, align: 'right', isRTL: true, valign: 'top'
             });
           });
         });
@@ -1198,7 +1317,7 @@
       } catch (err) {
         alert('حدث خطأ أثناء التوليد: ' + err.message);
       } finally {
-        pptxBtn.innerText = '🎬 تحميل عرض الداتا شو للحفل (PowerPoint .pptx)';
+        pptxBtn.innerText = '🎬 تحميل عرض الداتا شو (PowerPoint)';
         pptxBtn.disabled = false;
       }
     }
