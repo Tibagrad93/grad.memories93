@@ -10,7 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
   
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
@@ -66,21 +65,26 @@
       position: relative;
       z-index: 1;
       text-align: center;
-      padding: 35px 20px 15px;
+      padding: 40px 20px 20px;
     }
 
     .institute-logo-wrap {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 16px;
+      width: 125px;
+      height: 125px;
+      margin: 0 auto 18px;
       border-radius: 50%;
       background: #ffffff;
-      padding: 5px;
+      padding: 6px;
       box-shadow: 0 0 30px rgba(251, 191, 36, 0.4), 0 10px 25px rgba(0, 0, 0, 0.6);
       border: 3px solid #fbbf24;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: transform 0.3s ease;
+    }
+
+    .institute-logo-wrap:hover {
+      transform: scale(1.05);
     }
 
     .institute-logo-wrap img {
@@ -101,7 +105,8 @@
       border-radius: 30px;
       font-size: 0.95rem;
       font-weight: 700;
-      margin-bottom: 12px;
+      margin-bottom: 15px;
+      backdrop-filter: blur(8px);
     }
 
     header h1 {
@@ -110,7 +115,7 @@
       font-weight: 900;
       line-height: 1.45;
       max-width: 950px;
-      margin: 0 auto 10px;
+      margin: 0 auto 12px;
       text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     }
 
@@ -124,56 +129,7 @@
       color: #94a3b8;
       font-size: 1.15rem;
       max-width: 650px;
-      margin: 0 auto 20px;
-    }
-
-    /* شريط العداد التنازلي للحفل */
-    .countdown-section {
-      display: block;
-      max-width: 650px;
       margin: 0 auto 25px;
-      padding: 16px 20px;
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(12px);
-      border: 1.5px solid rgba(251, 191, 36, 0.4);
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-
-    .countdown-title {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #fbbf24;
-      margin-bottom: 10px;
-    }
-
-    .countdown-grid {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-    }
-
-    .countdown-box {
-      background: rgba(30, 41, 59, 0.85);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 8px 14px;
-      min-width: 70px;
-    }
-
-    .countdown-num {
-      font-size: 1.6rem;
-      font-weight: 900;
-      color: #ffffff;
-      line-height: 1;
-    }
-
-    .countdown-label {
-      font-size: 0.75rem;
-      color: #94a3b8;
-      font-weight: 700;
-      margin-top: 4px;
     }
 
     .action-bar {
@@ -212,6 +168,7 @@
       background: rgba(255, 255, 255, 0.08);
       color: #ffffff;
       border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
     }
 
     .search-wrapper {
@@ -232,6 +189,13 @@
       color: #ffffff;
       font-size: 1.05rem;
       outline: none;
+      transition: all 0.3s;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+
+    .search-input-box:focus {
+      border-color: #fbbf24;
+      box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.2);
     }
 
     .search-icon {
@@ -263,6 +227,8 @@
       font-size: 1rem;
       display: flex;
       gap: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     }
 
     .stats-pill strong { color: #fbbf24; font-size: 1.1rem; }
@@ -318,7 +284,7 @@
       background: var(--card-bg);
       backdrop-filter: blur(12px);
       border-radius: 24px;
-      padding: 22px 16px 16px;
+      padding: 24px 18px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -339,17 +305,19 @@
     .memory-card.top-rank {
       border: 2px solid #fbbf24;
       background: linear-gradient(180deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
+      box-shadow: 0 12px 35px rgba(251, 191, 36, 0.25);
     }
 
     .badge-top-10 {
       position: absolute;
       top: 12px;
       left: 12px;
-      background: var(--gold-gradient);
-      color: #0f172a;
+      background: rgba(59, 130, 246, 0.2);
+      border: 1px solid rgba(59, 130, 246, 0.5);
+      color: #93c5fd;
       font-size: 0.75rem;
-      font-weight: 900;
-      padding: 4px 10px;
+      font-weight: 800;
+      padding: 3px 8px;
       border-radius: 20px;
     }
 
@@ -363,6 +331,7 @@
       font-weight: 900;
       padding: 4px 10px;
       border-radius: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
     }
 
     .avatar-wrapper {
@@ -423,68 +392,15 @@
       line-height: 1.5;
       background: rgba(15, 23, 42, 0.7);
       border: 1px solid var(--border);
-      padding: 10px 12px;
+      padding: 12px 14px;
       border-radius: 14px;
       width: 100%;
-      min-height: 60px;
+      min-height: 65px;
       display: flex;
       align-items: center;
       justify-content: center;
       word-break: break-word;
       font-style: italic;
-      margin-bottom: 12px;
-    }
-
-    .card-actions-row {
-      display: flex;
-      gap: 8px;
-      width: 100%;
-      justify-content: center;
-    }
-
-    .card-react-btn {
-      flex: 1;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--border);
-      color: #cbd5e1;
-      padding: 6px 10px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      transition: all 0.2s;
-    }
-
-    .card-react-btn:hover {
-      background: rgba(239, 68, 68, 0.15);
-      border-color: rgba(239, 68, 68, 0.5);
-      color: #f87171;
-    }
-
-    .card-share-btn {
-      flex: 1;
-      background: rgba(24, 119, 242, 0.15);
-      border: 1px solid rgba(24, 119, 242, 0.4);
-      color: #93c5fd;
-      padding: 6px 10px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      transition: all 0.2s;
-    }
-
-    .card-share-btn:hover {
-      background: #1877f2;
-      color: #ffffff;
     }
 
     .project-board {
@@ -493,6 +409,7 @@
       border-radius: 24px;
       padding: 24px;
       margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     }
 
     .project-header {
@@ -548,33 +465,32 @@
       border-radius: 24px;
       width: 100%;
       max-width: 480px;
-      padding: 24px;
+      padding: 28px;
       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
       color: #ffffff;
       position: relative;
-      max-height: 90vh;
-      overflow-y: auto;
     }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 10px;
+      padding-bottom: 12px;
     }
 
     .modal-header h3 { font-size: 1.35rem; font-weight: 800; color: #fbbf24; }
     .close-btn { background: none; border: none; font-size: 1.6rem; cursor: pointer; color: #94a3b8; }
 
     .profile-avatar-large {
-      width: 130px;
-      height: 130px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
       border: 4px solid #fbbf24;
-      margin: 0 auto 12px;
+      margin: 0 auto 15px;
       overflow: hidden;
+      box-shadow: 0 10px 25px rgba(217, 119, 6, 0.4);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -587,12 +503,11 @@
       background: rgba(15, 23, 42, 0.7);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 9px 14px;
-      margin-bottom: 8px;
+      padding: 10px 14px;
+      margin-bottom: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.95rem;
     }
 
     .form-group { margin-bottom: 16px; }
@@ -606,24 +521,6 @@
       color: #ffffff;
       font-size: 1rem;
       outline: none;
-    }
-
-    #storyCardTemplate {
-      position: fixed;
-      left: -9999px;
-      top: -9999px;
-      width: 1080px;
-      height: 1920px;
-      background: radial-gradient(circle at top right, #1e1b4b 0%, #0f172a 60%, #030712 100%);
-      color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      padding: 120px 80px;
-      box-sizing: border-box;
-      text-align: center;
-      font-family: 'Tajawal', sans-serif;
     }
   </style>
 </head>
@@ -645,17 +542,6 @@
     </h1>
     
     <p>لحظات وتعب سنين نوثقها هنا لتظل فخراً وذكرى خالدة بيننا مهما طالت الأيام ✨</p>
-
-    <!-- شريط العداد التنازلي للحفل -->
-    <div class="countdown-section" id="countdownWrapper">
-      <div class="countdown-title" id="countdownTitleText">⏳ متبقي على بدء حفل التخرج:</div>
-      <div class="countdown-grid">
-        <div class="countdown-box"><div class="countdown-num" id="cdDays">00</div><div class="countdown-label">أيام</div></div>
-        <div class="countdown-box"><div class="countdown-num" id="cdHours">00</div><div class="countdown-label">ساعات</div></div>
-        <div class="countdown-box"><div class="countdown-num" id="cdMinutes">00</div><div class="countdown-label">دقائق</div></div>
-        <div class="countdown-box"><div class="countdown-num" id="cdSeconds">00</div><div class="countdown-label">ثواني</div></div>
-      </div>
-    </div>
 
     <div class="action-bar">
       <button class="btn btn-gold" onclick="openStudentModal()">
@@ -703,7 +589,7 @@
     </p>
   </div>
 
-  <!-- Modal تفاصيل الطالب المكبرة مع أزرار التحميل والمشاركة على فيسبوك -->
+  <!-- Modal تفاصيل الطالب المكبرة -->
   <div class="modal-overlay" id="profileModal" onclick="if(event.target===this) closeProfileModal()">
     <div class="modal-box" style="text-align: center;">
       <div class="modal-header">
@@ -712,11 +598,11 @@
       </div>
 
       <div class="profile-avatar-large" id="modalLargeAvatar">
-        <span style="font-size:3.5rem;">🎓</span>
+        <span style="font-size:4rem;">🎓</span>
       </div>
 
-      <h2 id="modalStudentName" style="color:#ffffff; font-weight:900; margin-bottom:4px; font-size:1.4rem;">—</h2>
-      <p id="modalStudentDept" style="color:#fbbf24; font-weight:700; margin-bottom:12px; font-size:0.95rem;">—</p>
+      <h2 id="modalStudentName" style="color:#ffffff; font-weight:900; margin-bottom:6px;">—</h2>
+      <p id="modalStudentDept" style="color:#fbbf24; font-weight:700; margin-bottom:15px;">—</p>
 
       <div class="profile-info-item">
         <span style="color:#94a3b8;">⭐ المعدل التراكمي:</span>
@@ -738,55 +624,10 @@
         <strong id="modalStudentProject" style="color:#818cf8;">—</strong>
       </div>
 
-      <div style="margin-top:12px; text-align:right;">
+      <div style="margin-top:15px; text-align:right;">
         <label style="color:#94a3b8; font-size:0.85rem; font-weight:bold;">💬 الكلمة التذكارية:</label>
-        <div id="modalStudentNote" class="card-note" style="margin-top:4px; text-align:center;">—</div>
+        <div id="modalStudentNote" class="card-note" style="margin-top:5px; text-align:center;">—</div>
       </div>
-
-      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:12px;">
-        <button class="btn btn-gold" id="downloadStoryBtn" style="font-size:0.9rem; padding:10px;" onclick="generateStoryCardImage()">
-          📲 تحميل البطاقة
-        </button>
-        <button class="btn card-share-btn" style="font-size:0.9rem; padding:10px;" onclick="shareStudentProfile(selectedStudentForStory ? selectedStudentForStory.name : '')">
-          📢 مشاركة فيسبوك
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- قالب توليد صورة الـ Story المخفي -->
-  <div id="storyCardTemplate">
-    <div style="display:flex; flex-direction:column; align-items:center;">
-      <div style="width:200px; height:200px; border-radius:50%; background:#fff; padding:10px; border:6px solid #fbbf24; margin-bottom:30px;">
-        <img src="logo.jpg" style="width:100%; height:100%; object-fit:contain; border-radius:50%;" onerror="this.src='logo.png';">
-      </div>
-      <h2 style="font-size:3.2rem; color:#fbbf24; font-weight:900; margin:0;">معهد طيبة العالي</h2>
-      <p style="font-size:2rem; color:#cbd5e1; margin-top:10px;">لتكنولوجيا الإدارة والمعلومات - الدفعة 93</p>
-    </div>
-
-    <div style="display:flex; flex-direction:column; align-items:center; width:100%;">
-      <div id="storyAvatarBox" style="width:340px; height:340px; border-radius:50%; border:10px solid #fbbf24; overflow:hidden; margin-bottom:35px; background:#1e293b; display:flex; align-items:center; justify-content:center;">
-        <span style="font-size:8rem;">🎓</span>
-      </div>
-      <h1 id="storyStudentName" style="font-size:4.2rem; color:#ffffff; font-weight:900; margin:0 0 15px;">—</h1>
-      <p id="storyStudentDept" style="font-size:2.4rem; color:#fbbf24; font-weight:800; margin:0 0 30px;">—</p>
-      
-      <div style="display:flex; gap:25px; margin-bottom:35px;">
-        <div id="storyGpaBox" style="background:rgba(251,191,36,0.15); border:3px solid #fbbf24; padding:15px 40px; border-radius:40px; font-size:2rem; font-weight:900; color:#fbbf24;">
-          ⭐ المعدل: —
-        </div>
-        <div id="storyRankBox" style="display:none; background:rgba(129,140,248,0.2); border:3px solid #818cf8; padding:15px 40px; border-radius:40px; font-size:2rem; font-weight:900; color:#818cf8;">
-          🏅 الأول على القسم
-        </div>
-      </div>
-
-      <div id="storyNoteBox" style="background:rgba(15,23,42,0.85); border:3px solid rgba(255,255,255,0.2); padding:30px 40px; border-radius:30px; font-size:2rem; color:#f8fafc; font-style:italic; max-width:900px; line-height:1.5;">
-        “ مبروك التخرج وبالتوفيق دائماً! ”
-      </div>
-    </div>
-
-    <div style="font-size:1.8rem; color:#94a3b8; font-weight:700;">
-      🎓 حفل تخرج دفعة 93 | تم التوثيق عبر لوحة الشرف
     </div>
   </div>
 
@@ -853,16 +694,9 @@
 
     let allStudents = [];
     let currentDocId = null;
-    let selectedStudentForStory = null;
     let tempPhotoBase64 = '';
-    let countdownInterval = null;
 
-    let eventDateString = '2026-09-15T18:00';
-
-    window.addEventListener('load', () => {
-      launchConfetti();
-      startCountdown(eventDateString, 'متبقي على بدء حفل التخرج');
-    });
+    window.addEventListener('load', () => launchConfetti());
 
     function launchConfetti() {
       if (typeof confetti === 'function') {
@@ -882,52 +716,6 @@
       return isNaN(num) ? 0 : num;
     }
 
-    db.collection("settings").doc("general").onSnapshot((doc) => {
-      if (doc.exists) {
-        const data = doc.data();
-        if (data.eventDate) {
-          eventDateString = data.eventDate;
-          startCountdown(eventDateString, data.eventTitle || 'متبقي على بدء حفل التخرج');
-        }
-      }
-    });
-
-    function startCountdown(targetDateStr, title) {
-      const targetTime = new Date(targetDateStr).getTime();
-      if (isNaN(targetTime)) return;
-
-      document.getElementById('countdownWrapper').style.display = 'block';
-      if (title) document.getElementById('countdownTitleText').innerText = `⏳ ${title}:`;
-
-      if (countdownInterval) clearInterval(countdownInterval);
-
-      function update() {
-        const now = new Date().getTime();
-        const diff = targetTime - now;
-
-        if (diff <= 0) {
-          document.getElementById('countdownWrapper').innerHTML = `
-            <div style="font-size:1.2rem; font-weight:900; color:#34d399;">🎉 أهلاً بكم في حفل تخرج الدفعة 93! مبارك التخرج 🎓</div>
-          `;
-          clearInterval(countdownInterval);
-          return;
-        }
-
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        document.getElementById('cdDays').innerText = String(days).padStart(2, '0');
-        document.getElementById('cdHours').innerText = String(hours).padStart(2, '0');
-        document.getElementById('cdMinutes').innerText = String(minutes).padStart(2, '0');
-        document.getElementById('cdSeconds').innerText = String(seconds).padStart(2, '0');
-      }
-
-      update();
-      countdownInterval = setInterval(update, 1000);
-    }
-
     db.collection("students").onSnapshot((snapshot) => {
       allStudents = [];
       snapshot.forEach(doc => allStudents.push({ id: doc.id, ...doc.data() }));
@@ -936,104 +724,19 @@
       console.error("Firestore Error:", error);
     });
 
+    // دالة تحديد شارة الترتيب لكل طالب بدقة
     function getEffectiveRank(student) {
-      if (student.hideRank === true) return null;
+      if (student.hideRank) return null;
       if (student.customRank && String(student.customRank).trim() !== '') {
         return student.customRank;
       }
       return (student.actualDeptRank > 0 && student.actualDeptRank <= 10) ? student.actualDeptRank : null;
     }
 
-    async function sendCongratulation(e, studentId) {
-      e.stopPropagation();
-      try {
-        await db.collection("students").doc(studentId).update({
-          likes: firebase.firestore.FieldValue.increment(1)
-        });
-        launchConfetti();
-      } catch (err) {
-        console.error("Like error:", err);
-      }
-    }
-
-    // دالة مشاركة بطاقة الطالب كصورة حقيقية ولينك معاً
-    async function shareStudentProfile(studentName, e) {
-      if (e) e.stopPropagation();
-      const student = (selectedStudentForStory && selectedStudentForStory.name === studentName) 
-        ? selectedStudentForStory 
-        : allStudents.find(s => s.name === studentName) || selectedStudentForStory;
-
-      if (!student) return;
-
-      const template = document.getElementById('storyCardTemplate');
-      document.getElementById('storyStudentName').innerText = student.name || 'خريج متميز';
-      document.getElementById('storyStudentDept').innerText = `قسم: ${student.department || 'خريج المعهد'}`;
-      document.getElementById('storyGpaBox').innerText = `⭐ المعدل: ${student.gpa || '—'}`;
-      document.getElementById('storyNoteBox').innerText = student.submitted ? `“ ${student.note} ”` : '“ مبارك التخرج والنجاح دائماً! ”';
-
-      const avatarBox = document.getElementById('storyAvatarBox');
-      if (student.photo) {
-        avatarBox.innerHTML = `<img src="${student.photo}" style="width:100%; height:100%; object-fit:cover;">`;
-      } else {
-        avatarBox.innerHTML = `<span style="font-size:8rem;">🎓</span>`;
-      }
-
-      const effRank = getEffectiveRank(student);
-      const rankBox = document.getElementById('storyRankBox');
-      if (effRank) {
-        rankBox.style.display = 'block';
-        rankBox.innerText = `🏅 المركز ${effRank} على القسم`;
-      } else {
-        rankBox.style.display = 'none';
-      }
-
-      try {
-        const canvas = await html2canvas(template, {
-          scale: 1.2,
-          useCORS: true,
-          allowTaint: true,
-          backgroundColor: '#0f172a'
-        });
-
-        canvas.toBlob(async (blob) => {
-          const file = new File([blob], `Graduation_${student.name.replace(/\s+/g, '_')}.png`, { type: 'image/png' });
-          const shareData = {
-            title: `تخرج ${student.name} - دفعة 93`,
-            text: `🎓 فخور بتخرجي من معهد طيبة العالي لتكنولوجيا الإدارة والمعلومات - الدفعة 93! ✨\n`,
-            url: window.location.href,
-            files: [file]
-          };
-
-          if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            try {
-              await navigator.share(shareData);
-              launchConfetti();
-            } catch (err) {
-              console.log("Share dismissed");
-            }
-          } else {
-            const link = document.createElement('a');
-            link.download = `Graduation_${student.name.replace(/\s+/g, '_')}.png`;
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-
-            const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(shareData.text)}`;
-            window.open(fbUrl, '_blank', 'width=600,height=500');
-            alert('تم تحميل صورة بطاقة تخرجك بنجاح! يمكنك إرفاقها مباشرة الآن في منشور فيسبوك 🎓');
-          }
-        }, 'image/png');
-
-      } catch (err) {
-        const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
-        window.open(fbUrl, '_blank', 'width=600,height=500');
-      }
-    }
-
     function createCardHTML(student) {
       const effRank = getEffectiveRank(student);
       let top10Badge = effRank ? `<div class="badge-top-10">🏅 المركز ${effRank}</div>` : '';
       let crownTag = student.isTop ? `<div class="crown-tag">👑 أوائل المعهد</div>` : '';
-      let likesCount = student.likes || 0;
 
       return `
         <div class="memory-card ${student.isTop ? 'top-rank' : ''} ${student.submitted ? 'submitted' : 'pending'}" onclick="openProfileModal('${student.id}')">
@@ -1052,15 +755,6 @@
           </div>
 
           <div class="card-note">${student.submitted ? `“ ${student.note} ”` : 'في انتظار توثيق الذكرى... ⏳'}</div>
-
-          <div class="card-actions-row">
-            <button class="card-react-btn" onclick="sendCongratulation(event, '${student.id}')">
-              ❤️ مبارك (${likesCount})
-            </button>
-            <button class="card-share-btn" onclick="shareStudentProfile('${student.name}', event)">
-              📢 شير
-            </button>
-          </div>
         </div>
       `;
     }
@@ -1084,6 +778,7 @@
       let submittedCount = 0;
       allStudents.forEach(s => { if (s.submitted) submittedCount++; });
 
+      // 1. حساب الترتيب التلقائي الدقيق لكل طالب في قسمه
       const allDeptGroups = {};
       allStudents.forEach(student => {
         const dept = student.department ? student.department.trim() : 'عام';
@@ -1098,6 +793,7 @@
         });
       });
 
+      // 2. تصفية نتائج البحث
       const filteredStudents = allStudents.filter(s => {
         const nameMatch = String(s.name || '').toLowerCase().includes(query);
         const deptMatch = String(s.department || '').toLowerCase().includes(query);
@@ -1106,6 +802,7 @@
         return nameMatch || deptMatch || projMatch || honorsMatch;
       });
 
+      // 3. عرض أوائل المعهد بالأعلى
       const topStudents = filteredStudents.filter(s => s.isTop);
       topStudents.sort((a, b) => parseGpa(b.gpa) - parseGpa(a.gpa));
 
@@ -1118,6 +815,7 @@
         topSection.style.display = 'none';
       }
 
+      // 4. تجميع وعرض بوردات مشاريع التخرج المستقلة
       const projectGroups = {};
       filteredStudents.forEach(student => {
         if (student.projectName && student.projectName.trim() !== '') {
@@ -1165,6 +863,7 @@
         return;
       }
 
+      // 5. تجميع الأقسام وفرز الطلاب داخل كل تخصص تنازلياً بدقة
       const filteredDeptGroups = {};
       filteredStudents.forEach(student => {
         const dept = student.department ? student.department.trim() : 'عام';
@@ -1214,8 +913,6 @@
       const student = allStudents.find(s => s.id === studentId);
       if (!student) return;
 
-      selectedStudentForStory = student;
-
       document.getElementById('modalStudentName').innerText = student.name || 'خريج';
       document.getElementById('modalStudentDept').innerText = `قسم: ${student.department || 'خريج المعهد'}`;
       document.getElementById('modalStudentGpa').innerText = student.gpa ? student.gpa : '—';
@@ -1225,7 +922,7 @@
       if (student.photo) {
         avatarBox.innerHTML = `<img src="${student.photo}">`;
       } else {
-        avatarBox.innerHTML = `<span style="font-size:3.5rem;">🎓</span>`;
+        avatarBox.innerHTML = `<span style="font-size:4rem;">🎓</span>`;
       }
 
       const effRank = getEffectiveRank(student);
@@ -1262,59 +959,6 @@
 
     function closeProfileModal() {
       document.getElementById('profileModal').style.display = 'none';
-    }
-
-    async function generateStoryCardImage() {
-      if (!selectedStudentForStory) return;
-
-      const btn = document.getElementById('downloadStoryBtn');
-      btn.innerText = '⏳ جاري التصميم...';
-      btn.disabled = true;
-
-      const student = selectedStudentForStory;
-      const template = document.getElementById('storyCardTemplate');
-
-      document.getElementById('storyStudentName').innerText = student.name || 'خريج متميز';
-      document.getElementById('storyStudentDept').innerText = `قسم: ${student.department || 'خريج المعهد'}`;
-      document.getElementById('storyGpaBox').innerText = `⭐ المعدل: ${student.gpa || '—'}`;
-      document.getElementById('storyNoteBox').innerText = student.submitted ? `“ ${student.note} ”` : '“ مبارك التخرج والنجاح دائماً! ”';
-
-      const avatarBox = document.getElementById('storyAvatarBox');
-      if (student.photo) {
-        avatarBox.innerHTML = `<img src="${student.photo}" style="width:100%; height:100%; object-fit:cover;">`;
-      } else {
-        avatarBox.innerHTML = `<span style="font-size:8rem;">🎓</span>`;
-      }
-
-      const effRank = getEffectiveRank(student);
-      const rankBox = document.getElementById('storyRankBox');
-      if (effRank) {
-        rankBox.style.display = 'block';
-        rankBox.innerText = `🏅 المركز ${effRank} على القسم`;
-      } else {
-        rankBox.style.display = 'none';
-      }
-
-      try {
-        const canvas = await html2canvas(template, {
-          scale: 1.5,
-          useCORS: true,
-          allowTaint: true,
-          backgroundColor: '#0f172a'
-        });
-
-        const link = document.createElement('a');
-        link.download = `Graduation_Story_${student.name.replace(/\s+/g, '_')}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-        
-        launchConfetti();
-      } catch (err) {
-        alert('حدث خطأ أثناء توليد الصورة: ' + err.message);
-      } finally {
-        btn.innerText = '📲 تحميل البطاقة';
-        btn.disabled = false;
-      }
     }
 
     function openStudentModal() {
