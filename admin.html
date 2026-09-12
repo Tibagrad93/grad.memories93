@@ -481,30 +481,6 @@
         <input type="file" id="excelFileInput" accept=".xlsx, .xls, .csv" style="display:none;" onchange="handleExcelUpload(event)">
       </div>
 
-      <!-- تقارير التفاعل -->
-      <div class="excel-box" style="background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.4); margin-bottom: 20px;">
-        <div>
-          <strong style="color: #60a5fa; font-size:1.05rem;">📈 تقارير التفاعل (الصور والذكريات):</strong>
-          <p style="font-size: 0.85rem; color: #94a3b8; margin-top: 3px;">
-            تصدير تقارير تفصيلية بصيغة Excel بناءً على تفاعل الطلاب بإضافة الصور والذكريات.
-          </p>
-        </div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; width: 100%;">
-          <button class="btn" style="background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.4); color: #93c5fd;" onclick="exportInteractionReport('both')">
-            📸📝 صورة وذكرى
-          </button>
-          <button class="btn" style="background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.4); color: #6ee7b7;" onclick="exportInteractionReport('photo_only')">
-            📸 صورة فقط
-          </button>
-          <button class="btn" style="background: rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.4); color: #fcd34d;" onclick="exportInteractionReport('note_only')">
-            📝 ذكرى فقط
-          </button>
-          <button class="btn" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5;" onclick="exportInteractionReport('neither')">
-            ❌ لا صورة ولا ذكرى
-          </button>
-        </div>
-      </div>
-
       <div class="form-card">
         <h4 style="margin-bottom: 12px; color: #fbbf24;">➕ إضافة خريج يدوي:</h4>
         <div class="form-row">
@@ -1029,8 +1005,7 @@
 
           if (addedCount > 0) {
             await batch.commit();
-            alert(`✅ تم استيراد (${addedCount}) طالب بنجاح!
-⚠️ تم تخطي وتجاهل (${duplicateCount}) كود مكرر.`);
+            alert(`✅ تم استيراد (${addedCount}) طالب بنجاح!\n⚠️ تم تخطي وتجاهل (${duplicateCount}) كود مكرر.`);
           } else {
             alert(`لم تتم إضافة أي طالب جديد (جميع الأكواد (${duplicateCount}) مسجلة مسبقاً).`);
           }
@@ -1066,70 +1041,6 @@
       XLSX.utils.book_append_sheet(workbook, worksheet, "مقاعد الخريجين");
 
       XLSX.writeFile(workbook, `Graduation_Seats_Report_${new Date().getFullYear()}.xlsx`);
-    }
-
-    function exportInteractionReport(type) {
-      if (studentsList.length === 0) return alert('لا توجد بيانات طلاب لتصديرها.');
-
-      let filteredStudents = [];
-      let reportTitle = "";
-
-      studentsList.forEach(student => {
-        const hasPhoto = student.photo && student.photo.trim() !== "";
-        const hasNote = student.note && student.note.trim() !== "";
-
-        if (type === 'both' && hasPhoto && hasNote) {
-          filteredStudents.push(student);
-        } else if (type === 'photo_only' && hasPhoto && !hasNote) {
-          filteredStudents.push(student);
-        } else if (type === 'note_only' && !hasPhoto && hasNote) {
-          filteredStudents.push(student);
-        } else if (type === 'neither' && !hasPhoto && !hasNote) {
-          filteredStudents.push(student);
-        }
-      });
-      
-      if (type === 'both') reportTitle = "طلاب_اضافوا_صورة_وذكرى";
-      else if (type === 'photo_only') reportTitle = "طلاب_اضافوا_صورة_فقط";
-      else if (type === 'note_only') reportTitle = "طلاب_اضافوا_ذكرى_فقط";
-      else if (type === 'neither') reportTitle = "طلاب_لم_يضيفوا_شيئا";
-
-      if (filteredStudents.length === 0) {
-        return alert('لا يوجد طلاب يطابقون هذا التقرير حالياً.');
-      }
-
-      const exportData = filteredStudents.map((student, index) => ({
-        "م": index + 1,
-        "اسم الطالب": student.name || '',
-        "الكود": student.code || '',
-        "التخصص / القسم": student.department || '',
-        "المعدل": student.gpa || '',
-        "أضاف صورة؟": (student.photo && student.photo.trim() !== "") ? "نعم" : "لا",
-        "أضاف ذكرى؟": (student.note && student.note.trim() !== "") ? "نعم" : "لا",
-        "محتوى الذكرى": student.note || ''
-      }));
-
-      const worksheet = XLSX.utils.json_to_sheet(exportData);
-      
-      // ضبط اتجاه الورقة من اليمين لليسار في إكسيل
-      if(!worksheet['!views']) worksheet['!views'] = [];
-      worksheet['!views'].push({ rightToLeft: true });
-
-      worksheet['!cols'] = [
-        { wch: 5 }, 
-        { wch: 25 },
-        { wch: 15 },
-        { wch: 20 },
-        { wch: 10 },
-        { wch: 12 },
-        { wch: 12 },
-        { wch: 40 } 
-      ];
-
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "التقرير");
-
-      XLSX.writeFile(workbook, `${reportTitle}_${new Date().getFullYear()}.xlsx`);
     }
 
     function openEditModal(docId) {
@@ -1204,9 +1115,7 @@
     async function deleteAllStudents() {
       if (studentsList.length === 0) return alert('لا توجد بيانات طلاب لمسحها.');
 
-      const confirm1 = confirm(`⚠️ تحذير شديد الخطورة:
-أنت على وشك حذف جميع الطلاب (${studentsList.length} طالب) نهائياً!
-هل تريد المتابعة؟`);
+      const confirm1 = confirm(`⚠️ تحذير شديد الخطورة:\nأنت على وشك حذف جميع الطلاب (${studentsList.length} طالب) نهائياً!\nهل تريد المتابعة؟`);
       if (!confirm1) return;
 
       const confirmText = prompt('لتأكيد الحذف الشامل، اكتب كلمة (حذف الكل) في المربع أدناه:');
@@ -1260,6 +1169,7 @@
         let pptx = new PptxGenJS();
         pptx.layout = 'LAYOUT_16x9';
 
+        // إعداد ألوان الثيم المختار
         let isCheerful = (selectedTheme === 'cheerful');
         let bgIntroColor = isCheerful ? 'F8FAFC' : '0D1B2A';
         let titleIntroColor = isCheerful ? '1E3A8A' : 'FFFFFF';
@@ -1271,6 +1181,7 @@
         let textColor = isCheerful ? '334155' : 'E2E8F0';
         let borderColor = isCheerful ? 'CBD5E1' : '334155';
 
+        // شريحة البداية
         let introSlide = pptx.addSlide();
         introSlide.background = { color: bgIntroColor };
 
@@ -1329,6 +1240,7 @@
             slide.addShape(pptx.shapes.RECTANGLE, { x: 0, y: 0, w: 10.0, h: 0.12, fill: { color: 'D97706' } });
             slide.addShape(pptx.shapes.RECTANGLE, { x: 0, y: 5.5, w: 10.0, h: 0.12, fill: { color: 'D97706' } });
 
+            // إطار وصورة الطالب (جهة اليسار لتناسب الـ RTL)
             slide.addShape(pptx.shapes.ROUNDED_RECTANGLE, {
               x: 6.6, y: 0.7, w: 2.8, h: 4.2,
               fill: { color: cardBgColor },
@@ -1372,6 +1284,7 @@
               });
             }
 
+            // اسم الطالب (من اليمين لليسار)
             slide.addText(student.name, {
               x: 0.6, y: 0.8, w: 5.7, h: 0.6,
               fontSize: 26, color: nameColor, bold: true, align: 'right', isRTL: true
@@ -1385,6 +1298,7 @@
               fontSize: 13, color: 'D97706', bold: true, align: 'right', isRTL: true
             });
 
+            // بطاقة الكلمة أو التهنئة
             slide.addShape(pptx.shapes.ROUNDED_RECTANGLE, {
               x: 0.6, y: 2.0, w: 5.7, h: 2.9,
               fill: { color: cardBgColor },
